@@ -1,13 +1,213 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200;500&display=swap');
+
+:root {
+    --main-color: rgb(24, 24, 24); /*rgb(43, 43, 43)*/
+    --secondary-color: rgb(255, 255, 255); /*rgb(240, 219, 79)*/
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+    font-family: "Roboto Mono", monospace;
 }
+
+body {
+    background-color: var(--main-color);
+    margin: 0;
+}
+
+#loader {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: auto;
+    margin: 0;
+}
+
+#page {
+    position: relative;
+    height: auto;
+    width: auto;
+}
+
+#wrapper {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+#topbarPositioner {
+    position: -webkit-sticky;
+    position: sticky;
+    width: auto;
+    height: 84px;
+    top: 0px;
+
+    background-color: var(--main-color);
+}
+
+.topbar {
+    position: relative;
+    height: 64px;
+    width: 1080px;
+    left: 50%;
+    margin-left: -540px;
+    top: 10px;
+}
+
+.logo {
+    background-color: var(--secondary-color);
+    position: absolute;
+    top: 15%; left: 40px;
+    height: 70%;
+    width: 100px;
+}
+
+.topbarMenus {
+    position: relative;
+    float: right;
+    top: 0%;
+    height: 100%;
+    width: 400px;
+}
+
+.topbarbutton {
+    background: none;
+    position: relative;
+    border: none;
+    height: 100%;
+    width: auto;
+    left: 10px;
+
+    font-size: 1.3em;
+    color: var(--secondary-color);
+}
+
+.topbarbutton:hover {
+    text-decoration: underline;
+}
+
+.section-enter {
+    opacity: 0.01;
+  }
+  
+.section-enter.section-enter-active {
+    opacity: 1;
+    transition: opacity 1s ease-in;
+}
+
+.section-exit {
+    opacity: 1;
+}
+
+.section-exit.section-exit-active {
+    opacity: 0.01;
+    transition: opacity 1s ease-in;
+}
+
+.divider {
+    position: relative;
+    width: 15px;
+    height: auto;
+    display: inline-block;
+}
+
+#aboutSection {
+    position: relative;
+    top: 45%;
+    margin-top: -220px;
+    left: 50%;
+    margin-left: -540px;
+    height: 350px;
+    width: 1080px;
+    z-index: -1;
+}
+
+#aboutDivider {
+    position: relative;
+    height: 350px;
+}
+
+.title {
+    position: absolute;
+    height: 100%;
+    width: 200px;
+
+    font-size: 2.5em;
+    color: var(--secondary-color);
+}
+
+.titleText {
+    position: relative;
+    top: 40%;
+    left: 70%;
+}
+
+#about {
+    position: absolute;
+    left: 350px;
+    height: 300px;
+    width: 600px;
+
+    display: flex;
+    padding-right: 50px;
+    padding-left: 50px;
+    align-items: center;
+
+    border-radius: 15px;
+    background-color: var(--secondary-color);
+    /*
+    border-style: solid;
+    border-color: var(--secondary-color);
+    */
+}
+
+#aboutText {
+    text-align: justify;
+    text-indent: 20px;
+    font-size: 1.2em;
+
+}
+
+.gg-chevron-down {
+    color: var(--secondary-color);
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,2));
+    top: 50px;
+    left: 50%;
+    bottom: 12vh;
+    border-left: 22px;
+    width: 22px;
+    height: 22px;
+    border: 2px solid transparent;
+    border-radius: 100px
+   }
+   
+   .gg-chevron-down::after {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+    transform: rotate(45deg);
+    left: 4px;
+    top: 2px
+   } 
+
+   #projectsSection {
+       position: relative;
+       top: 450px;
+       height: 800px;
+       width: 1264px;
+       left: 50%;
+       margin-left: -632px;
+       border-radius: 25px;
+       background-color: var(--secondary-color);
+       z-index: -1;
+   }

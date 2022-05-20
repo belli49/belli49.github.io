@@ -27,8 +27,21 @@ class HomePage extends React.Component {
                     <div id="topbarPositioner">
                         <TopBar onClick={(val) => {this.handleClick(val)}}/>
                     </div>
-        
                     <Outlet/>
+                </div>
+                <div id='bottomSection'>
+                    <div className='grid-container'>
+                        <div className='grid-item'></div>
+                        <div className='grid-item'>Linked In</div>
+                        <div className='grid-item'>GitHub</div>
+                        <div className='grid-item'>Contact me!</div>
+                        <div className='grid-item'></div>
+                        <div className='grid-item'></div>
+                        <div className='grid-item'>https://www.linkedin.com/in/pedro-belli-komessu-033092238/</div>
+                        <div className='grid-item'>https://github.com/belli49</div>
+                        <div className='grid-item'>pedrokomessu(at)gmail.com</div>
+                        <div className='grid-item'></div>
+                    </div>
                 </div>
             </div>
         );
@@ -81,6 +94,9 @@ class AboutSection extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            languages: 1,
+            tools: 1,
+            education: 1,
             sectionElements: ["Hello!", "About2", "About3"],
             sectionNumber: 0,
         }
@@ -88,14 +104,66 @@ class AboutSection extends React.Component {
 
     render() {
         return(
-            <div id="aboutSection">
-                <div id="aboutDivider">
-                    <div className="title"><a className="titleText">{this.state.sectionElements[this.state.sectionNumber]}</a></div>
-                    <div id="about">
-                        <p id="aboutText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <div className='sectionWrapper'>
+                <div id="aboutSection">
+                    <div id="aboutDivider">
+                        <div className="title"><a className="titleText">{this.state.sectionElements[this.state.sectionNumber]}</a></div>
+                        <div id="about">
+                            <p id="aboutText">Hello! I'm Pedro. Welcome to my website! Scroll down to learn a bit about me!</p>
+                        </div>
+                    </div>
+                    <div style={{position:'relative', height:'auto', width:'auto'}}>
+                        <div className="gg-chevron-down"></div>
                     </div>
                 </div>
-                <div className="gg-chevron-down"></div>
+                <div id="curriculumSection">
+                    <div className='curriculumBubble'>
+                        <div className='curriculumTitle'>
+                        <button className='aboutButton' onClick={() => { this.setState({ education: !this.state.education }) }}>Education</button>
+                    </div>
+                    {this.state.education == 1 &&
+                        <div className='curriculumList'>
+                            <ul>
+                                <li>Tohoku University: Bachelor in Computer Engineering. Overall GPA: 3.42/4, Major GPA 3.55/4 (as of beginning of 5th semester, 2022).</li>
+                                <li>MEXT (Japan's Ministry of Education, Culture, Sports, Science and Technology) Scholarship grantee.</li>
+                                <li>Osaka University CJLC intensive Japanese language and culture course.</li>
+                                <li>Native Portuguese, advanced English and Japanese, intermediade Spanish.</li>
+                            </ul>
+                        </div>
+                    }
+                    </div>
+                    <div className='curriculumBubble'>
+                        <div className='curriculumTitle'>
+                            <button className='aboutButton' onClick={() => { this.setState({ languages: !this.state.languages }) }}>Languages</button>
+                        </div>
+                        {this.state.languages == 1 &&
+                            <div className='curriculumList'>
+                                <ul>
+                                    <li>C++: Used mainly for solving algorithmic problems.</li>
+                                    <li>JavaScript: Used for website/nodejs projects. For websites, I like to use ReactJS.</li>
+                                    <li>C#: Used mainly with Unity for making games. I also used it a bit for making small, desktop apps.</li>
+                                    <li>Python: One of the first languages I learned. I plan on using it for ML/AI related projects.</li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                    <div className='curriculumBubble'>
+                        <div className='curriculumTitle' style={{zIndex:'10'}}>
+                            <button className='aboutButton' onClick={() => { this.setState({ tools: !this.state.tools }) }}>Tools</button>
+                        </div>
+                        {this.state.tools == 1 &&
+                            <div className='curriculumList'>
+                                <ul>
+                                    <li>VSCode: My main text editor. What I use for almost every project.</li>
+                                    <li>Vim: Normally I just use the VIM extension for VSCode, but for quick alterations or algorithmic problems I like to use the terminal version of VIM.</li>
+                                    <li>wsl2: I like to use Ubuntu + Windows Terminal for a better, more dynamic workflow.</li>
+                                    <li>Intermediate Excel: I had Excel classes from Middle School through High School. Although I don't use it for projects, I am quite comfortable with it.</li>
+                                </ul>
+                            </div>
+                        }   
+                    </div>
+                </div>
+                <div style={{position:'relative', width:'100%', height:'400px'}} />
             </div>
         );
     }
@@ -110,7 +178,74 @@ class ProjectSection extends React.Component {
 
     render() {
         return(
-            <a></a>
+            <div style={{position: 'relative', width: 'auto', height: 'auto'}}>
+                <div style={{position: 'relative', height: 'auto', width: '100%', top: '10vh', textAlign: 'center'}}>
+                    <a style={{position: 'relative', fontSize: '2em', color: 'white', cursor: 'default'}}>Projects</a>
+                </div>
+                <div className='project-grid'>
+                    <div></div>
+                    <Link to="/">
+                        <div className='project-grid-item'>
+                            <a style={{position: 'relative', top: '8px'}}>This website!</a>
+                            <img
+                                src={ require('./img/site_proj_thumb.png') }
+                                draggable={'false'}
+                                style={{width:'100%', position: 'relative', top: '20px'}}
+                            />
+                        </div>
+                    </Link>
+                    <div></div>
+                    <Link to="/Projects/Sorting">
+                        <div className='project-grid-item'>
+                            <a style={{position: 'relative', top: '8px'}}>Sort Visualiser</a>
+                            <img
+                                src={ require('./img/site_proj_thumb.png') }
+                                draggable={'false'}
+                                style={{width:'100%', position: 'relative', top: '20px'}}
+                            />
+                        </div>
+                    </Link>
+                    <div></div>
+                    <div></div>
+                    <Link to="/">
+                        <div className='project-grid-item'>
+                            <a style={{position: 'relative', top: '8px'}}>This website!</a>
+                            <img
+                                src={ require('./img/site_proj_thumb.png') }
+                                draggable={'false'}
+                                style={{width:'100%', position: 'relative', top: '20px'}}
+                            />
+                        </div>
+                    </Link>
+                    <div></div>
+                    <Link to="/">
+                        <div className='project-grid-item'>
+                            <a style={{position: 'relative', top: '8px'}}>This website!</a>
+                            <img
+                                src={ require('./img/site_proj_thumb.png') }
+                                draggable={'false'}
+                                style={{width:'100%', position: 'relative', top: '20px'}}
+                            />
+                        </div>
+                    </Link>
+                    <div></div>
+                </div>
+                <div style={{position:'relative', width:'100%', height:'200px'}} />
+            </div>
+        );
+    }
+}
+
+class ContactSection extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
+    }
+
+    render() {
+        return(
+            <div></div>
         );
     }
 }
@@ -122,8 +257,8 @@ ReactDOM.render(
                 <Route path="" element={<AboutSection/>} />
                 <Route path="About" element={<AboutSection/>} />
                 <Route path="Projects" element={<ProjectSection/>} />
-                <Route path="Contact" element={<ProjectSection/>} />
-                <Route path="Sorting" element={<Sorts/>}>
+                <Route path="Contact" element={<ContactSection/>} />
+                <Route path="Projects/Sorting" element={<Sorts/>}>
 
                 </Route>
             </Route>
@@ -131,6 +266,8 @@ ReactDOM.render(
     </BrowserRouter>,
     document.getElementById("loader")
 );
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -12,6 +12,35 @@
 body {
     background-color: var(--main-color);
     margin: 0;
+    overflow: overlay;
+}
+
+#bottomSection {
+    position: relative;
+    width: auto;
+    height: 100px;
+    top: 15vh;
+    background: var(--secondary-color);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 #loader {
@@ -26,25 +55,29 @@ body {
 #page {
     position: relative;
     height: auto;
-    width: auto;
+    width: 100%;
 }
 
 #wrapper {
     position: relative;
-    height: 100vh;
+    height: auto;
     width: 100%;
     top: 0px;
     left: 0px;
 }
 
 #topbarPositioner {
+    /*
     position: -webkit-sticky;
     position: sticky;
-    width: auto;
+    */
+    position: relative;
+    width: 100%;
     height: 84px;
     top: 0px;
+    z-index: 1;
 
-    background-color: var(--main-color);
+    background-color: var(--secondary-color);
 }
 
 .topbar {
@@ -81,29 +114,11 @@ body {
     left: 10px;
 
     font-size: 1.3em;
-    color: var(--secondary-color);
+    color: var(--main-color);
 }
 
 .topbarbutton:hover {
     text-decoration: underline;
-}
-
-.section-enter {
-    opacity: 0.01;
-  }
-  
-.section-enter.section-enter-active {
-    opacity: 1;
-    transition: opacity 1s ease-in;
-}
-
-.section-exit {
-    opacity: 1;
-}
-
-.section-exit.section-exit-active {
-    opacity: 0.01;
-    transition: opacity 1s ease-in;
 }
 
 .divider {
@@ -115,11 +130,11 @@ body {
 
 #aboutSection {
     position: relative;
-    top: 45%;
+    top: 300px;
     margin-top: -220px;
     left: 50%;
     margin-left: -540px;
-    height: 350px;
+    height: auto;
     width: 1080px;
     z-index: -1;
 }
@@ -184,13 +199,13 @@ body {
     height: 22px;
     border: 2px solid transparent;
     border-radius: 100px
-   }
+}
    
-   .gg-chevron-down::after {
+.gg-chevron-down::after {
     content: "";
     display: block;
     box-sizing: border-box;
-    position: absolute;
+    position: relative;
     width: 10px;
     height: 10px;
     border-bottom: 2px solid;
@@ -198,16 +213,134 @@ body {
     transform: rotate(45deg);
     left: 4px;
     top: 2px
-   } 
+} 
 
-   #projectsSection {
-       position: relative;
-       top: 450px;
-       height: 800px;
-       width: 1264px;
-       left: 50%;
-       margin-left: -632px;
-       border-radius: 25px;
-       background-color: var(--secondary-color);
-       z-index: -1;
-   }
+#curriculumSection {
+    position: relative;
+    height: auto;
+    width: 800px;
+    top: 450px;
+
+    display: grid;
+    gap: 1.5rem;
+}
+
+.curriculumBubble {
+    position: relative;
+    height: auto;
+    width: 115vh;
+    top: 0px;
+    font-size: 1.5rem;
+
+    display: grid;
+    gap: 1.5rem;
+}
+
+.curriculumTitle {
+    position: relative;
+    left: 40vh;
+    width: 300px;
+    height: auto;
+    color: rgb(214, 214, 214);
+}
+
+.curriculumTitle:hover {
+    text-decoration: underline;
+    color: var(--secondary-color);
+    cursor: default;
+}
+
+.curriculumList, .curriculumList:hover {
+    position: relative;
+    height: auto;
+    width: auto;
+    font-size: 1.2rem;
+    color: rgb(214, 214, 214);
+    top: -20px;
+    left: 45vh;
+
+    cursor: default;
+    transition: all 0.25s ease 0s, transform 0.05s ease 0s;
+    transition-property: all, transform;
+    transition-duration: 0.25s, 0.05s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+}
+
+.aboutButton {
+    background: none;
+    border: none;
+
+    color: rgb(214, 214, 214);
+    font-size: 1.3rem;
+}
+
+.aboutButton:hover {
+    text-decoration: underline;
+}
+
+#projectsSection {
+    position: relative;
+    top: 450px;
+    height: 800px;
+    width: 1264px;
+    left: 50%;
+    margin-left: -632px;
+    border-radius: 25px;
+    background-color: var(--secondary-color);
+    z-index: -1;
+}
+
+.grid-container {   
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    padding: 10px;
+}
+
+.grid-item {
+    padding: 8px 0;
+    font-size: 10px;
+    text-align: center;
+}
+
+.project-grid {
+    display: grid;
+    position: relative;
+    height: auto;
+    width: auto;
+
+    grid-template-columns: 10% 35% 10% 35% 10%;
+    top: 20vh;
+    row-gap: 20vh;
+}
+
+.project-grid-item {
+    opacity: 0.75;
+    height: 45vh;
+    text-align: center;
+    
+    border-radius: 15px;
+    background-color: var(--secondary-color);
+
+    transition: all 0.25s ease 0s, transform 0.05s ease 0s;
+    transition-property: all, transform;
+    transition-duration: 0.25s, 0.05s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+}
+
+.project-grid-item:hover {
+    opacity: 1;
+
+    transition: all 0.25s ease 0s, transform 0.05s ease 0s;
+    transition-property: all, transform;
+    transition-duration: 0.25s, 0.05s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+}
+
+.sectionWrapper {
+    position: relative;
+    height: auto;
+    width: auto;
+}

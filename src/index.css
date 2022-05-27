@@ -2,7 +2,9 @@
 
 :root {
     --main-color: rgb(24, 24, 24); /*rgb(43, 43, 43)*/
+    --submain-color: rgb(40, 40, 40);
     --secondary-color: rgb(255, 255, 255); /*rgb(240, 219, 79)*/
+    --subsecondary-color: rgb(237, 237, 237);
 }
 
 * {

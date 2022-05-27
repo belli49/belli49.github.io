@@ -2,7 +2,7 @@
 
 #sorttypesbuttonbar {
     position: relative;
-    height: 10vh;
+    height: 66px;
     width: 100%;
     margin-top: 10vh;
     overflow: hidden;
@@ -20,30 +20,79 @@
 
 #sortbuttonsbar {
     position: relative;
-    height: 10vh;
+    height: 66px;
     width: 100%;
 
     text-align: center;
+    vertical-align: center;
 
     overflow: hidden;
 }
 
-.sortbutton {
-    background: none;
+.sorttypebutton {
     position: relative;
     border: none;
-    height: 100%;
-    width: auto;
+    height: min-content;
+    top: 20%;
+    width: 120px;
+    padding: 0.5rem;
+    box-sizing: border-box;
 
     margin-right: 3vh;
     margin-left: 3vh;
 
-    font-size: 1.3em;
+    font-size: 1em;
+    border-radius: 0.5rem;
+    background-color: var(--subsecondary-color);
+    color: var(--main-color);
+
+    transition: background .125s,color .125s;
+    transition-property: all, transform;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+} 
+
+.sorttypebutton:hover {
+    background-color: var(--main-color);
     color: var(--secondary-color);
+
+    transition: background .125s,color .125s;
+    transition-property: all, transform;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+}
+
+.sortbutton {
+    position: relative;
+    border: none;
+    height: min-content;
+    top: 20%;
+    width: 120px;
+    padding: 0.5rem;
+    box-sizing: border-box;
+
+    margin-right: 3vh;
+    margin-left: 3vh;
+
+    font-size: 1em;
+    border-radius: 0.5rem;
+    background-color: var(--submain-color);
+    color: var(--secondary-color);
+
+    transition: background .125s,color .125s;
+    transition-property: all, transform;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
 }
 
 .sortbutton:hover {
-    text-decoration: underline;
+    background-color: var(--secondary-color);
+    color: var(--main-color);
+
+    transition: background .125s,color .125s;
+    transition-property: all, transform;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
 }
 
 #sortContainer {
@@ -88,4 +137,9 @@
 .sortelementparent:hover
 {
     opacity: 100%;
+
+    transition: background .125s,color .125s;
+    transition-property: all, transform;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
 }

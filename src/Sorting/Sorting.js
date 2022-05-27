@@ -31,7 +31,6 @@ export default class Sorts extends React.Component {
             currentlySelectedIndex: [0, 1],
 
             initialState: {
-                sort: "bubble",
                 totalBubblePasses: 0,
                 elementsArray: [],
                 currentlySorting: false,
@@ -39,12 +38,24 @@ export default class Sorts extends React.Component {
                 currentlySelectedIndex: [0, 1],
             },
         };
+
+        this.HandleChangeBubble = () => {this.HandleChangeSort("bubble")}
+        this.HandleChangeTest = () => {this.HandleChangeSort("test")}
     }
 
     // ---------- FUNCTIONS START ----------
 
     // ---------- ONCLICK HANDLERS START ----------
-    // Adds Element to be sorted
+
+    HandleChangeSort(sortType) {
+        if (this.state.sort != sortType) {
+            this.HandleReset();
+            this.setState({ sort: sortType });
+        }
+
+        return;
+    }
+
     HandleAdd() {
         if (!this.state.currentlySorting && this.state.elementsArray.length < 30) {
             console.log("Added Number");
@@ -57,7 +68,6 @@ export default class Sorts extends React.Component {
         return;
     }
 
-    // Starts currently selected sort
     HandleStart() {
         //if (this.state.currentlySorting) return;
         if (this.state.completelySorted) return;
@@ -151,6 +161,9 @@ export default class Sorts extends React.Component {
 
         return;
     }
+
+    // Insertion Sort Function
+
     // ---------- SORT FUNCTIONS END ----------
     // ---------- FUNCTIONS END ----------
 
@@ -162,17 +175,17 @@ export default class Sorts extends React.Component {
                         <div className="gg-chevron-down" style={{zIndex:'1' , transform:'rotate(90deg) scale(2)', position:'absolute', left:'30vh', top:'1.9vh'}}></div>
                     </Link>
                     <a style={{position: 'relative', fontSize: '2em', color: 'white', cursor: 'default'}}>
-                        Sort
+                        Sort Visualiser
                     </a>
                 </div>
 
                 <div id='sorttypesbuttonbar'>
                     <div/>
-                    <button className='sortbutton' style={{color: "var(--main-color)"}}>Bubble</button>
+                    <button className='sorttypebutton' onClick={this.HandleChangeBubble.bind(this)}>Bubble</button>
                     <div/>
-                    <button className='sortbutton' style={{color: "var(--main-color)"}}>Test</button>
+                    <button className='sorttypebutton' onClick={this.HandleChangeTest.bind(this)}>Test</button>
                     <div/>
-                    <button className='sortbutton' style={{color: "var(--main-color)"}}>Test</button>
+                    <button className='sorttypebutton' onClick={this.HandleChangeTest.bind(this)}>Test</button>
                     <div/>
                 </div>
 
@@ -192,6 +205,9 @@ export default class Sorts extends React.Component {
                         })}
                     </div>
                     <div style={{height: '8px', position:'relative', width:'100%', backgroundColor:"var(--secondary-color)"}} />
+                    <div>
+
+                    </div>
                 </div>
             </div>
         );

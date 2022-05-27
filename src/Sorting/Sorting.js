@@ -42,13 +42,15 @@ export default class Sorts extends React.Component {
     }
 
     // ---------- FUNCTIONS START ----------
+
+    // ---------- ONCLICK HANDLERS START ----------
     // Adds Element to be sorted
     HandleAdd() {
         if (!this.state.currentlySorting && this.state.elementsArray.length < 30) {
             console.log("Added Number");
             const elements = this.state.elementsArray;
             this.setState({ ...this.state.initialState });
-            elements.push(parseInt( Math.random() * 100 ) + 1);
+            elements.push(Math.floor( Math.random() * 100 ) + 1);
             this.setState({ elementsArray: elements });
         }
 
@@ -73,6 +75,23 @@ export default class Sorts extends React.Component {
         return;
     }
 
+    HandleRandomise() {
+        if ( this.state.elementsArray.length < 2 || this.state.currentlySorting ) return;
+
+        let tempArray = this.state.elementsArray;
+        let n = tempArray.length, i = 0;
+
+        while (n > 0) {
+            i = Math.floor( Math.random() * n );
+            n--;
+            [ tempArray[i], tempArray[n] ] = [ tempArray[n], tempArray[i] ];
+        }
+
+        this.setState({ elementsArray: tempArray });
+        console.log("Elements Shuffled");
+        return;
+    }
+
     HandleReset() {
         console.log("Sort Reset");
         this.setState({ ...this.state.initialState });
@@ -89,43 +108,9 @@ export default class Sorts extends React.Component {
         }
     }
 
-    /* FOUND BETTER SOLUTION
+    // ---------- ONCLICK HANDLERS END ----------
 
-    SortRepeater(isRunning, sortFunction) {
-        const interval = setInterval(sortFunction, 200); 
-    }
-
-    BubbleSortNext() {
-        if (this.state.completelySorted) return;
-        if (!this.state.currentlySorting) {
-            this.setState({ currentlySorting: true, lastPass: true, currentlySelectedIndex: [0, 1] });
-        }
-        let i = this.state.currentlySelectedIndex[0], j = this.state.currentlySelectedIndex[1];
-        let nums = this.state.elementsArray, lastpass = true;
-
-        console.log([i, j]);
-        console.log(nums[i], nums[j]);
-
-        if (nums[i] > nums[j]) {
-            [nums[i], nums[j]] = [nums[j], nums[i]];
-            this.setState({ lastPass: false, elementsArray: nums });
-            lastpass = false;
-        }
-        this.setState({ currentlySelectedIndex: [j, j + 1] });
-
-        if (j >= nums.length - 1 - this.state.totalBubblePasses) {
-            if (this.state.lastPass && lastpass) {
-                this.setState({  currentlySorting: false, completelySorted: true });
-                this.SortRepeater(true, this.BubbleSortNext);
-            } else {
-                this.setState({ currentlySelectedIndex: [0, 1], lastPass: true, totalBubblePasses: this.state.totalBubblePasses + 1 });
-            }
-        }
-
-        return;
-    }
-    */
-
+    // ---------- SORT FUNCTIONS START ----------
     // Bubble Sort Function
     BubbleSort() {
         this.setState({ currentlySorting: true });
@@ -166,6 +151,7 @@ export default class Sorts extends React.Component {
 
         return;
     }
+    // ---------- SORT FUNCTIONS END ----------
     // ---------- FUNCTIONS END ----------
 
     render () {
@@ -194,7 +180,7 @@ export default class Sorts extends React.Component {
                     <div id='sortbuttonsbar'>
                         <button className='sortbutton' onClick={this.HandleAdd.bind(this) }>Add</button>
                         <button className='sortbutton' onClick={this.HandleRemove.bind(this)} >Remove</button>
-                        <button className='sortbutton'>Randomise</button>
+                        <button className='sortbutton' onClick={this.HandleRandomise.bind(this)}>Randomise</button>
                         <button className='sortbutton' onClick={this.HandleReset.bind(this)} >Reset</button>
                         <button className='sortbutton' onClick={this.HandleStart.bind(this)} >Start</button>
                     </div>

@@ -29,7 +29,6 @@ export default class Sorts extends React.Component {
             currentlySorting: false,
             completelySorted: false,
             currentlySelectedIndex: [0, 1],
-            selectOpacity: false,
 
             initialState: {
                 sort: "bubble",
@@ -38,7 +37,6 @@ export default class Sorts extends React.Component {
                 currentlySorting: false,
                 completelySorted: false,
                 currentlySelectedIndex: [0, 1],
-                selectOpacity: false,
             },
         };
     }
@@ -48,6 +46,7 @@ export default class Sorts extends React.Component {
     // Adds Element to be sorted
     HandleAdd() {
         if (!this.state.currentlySorting && this.state.elementsArray.length < 30) {
+            console.log("Added Number");
             const elements = this.state.elementsArray;
             this.setState({ ...this.state.initialState });
             elements.push(parseInt( Math.random() * 100 ) + 1);
@@ -65,7 +64,7 @@ export default class Sorts extends React.Component {
 
         switch (this.state.sort) {
             case 'bubble':
-                this.BubbleSortNext();
+                this.BubbleSort();
                 break;
 
             default:
@@ -80,18 +79,26 @@ export default class Sorts extends React.Component {
     }
 
     HandleRemove() {
-        let nums = this.state.elementsArray;
-        nums.pop();
-        this.setState({ elementsArray: nums });
+        if (!this.state.currentlySorting && this.state.elementsArray.length > 0) {
+            console.log("Removed Number");
+            let nums = this.state.elementsArray;
+            nums.pop();
+            this.setState({ ...this.state.initialState });
+            this.setState({ elementsArray: nums });
+        }
     }
 
-    // Bubble Sort Function to call every time interval
+    /* FOUND BETTER SOLUTION
+
+    SortRepeater(isRunning, sortFunction) {
+        const interval = setInterval(sortFunction, 200); 
+    }
+
     BubbleSortNext() {
         if (this.state.completelySorted) return;
         if (!this.state.currentlySorting) {
             this.setState({ currentlySorting: true, lastPass: true, currentlySelectedIndex: [0, 1] });
         }
-        this.setState({ selectOpacity: true });
         let i = this.state.currentlySelectedIndex[0], j = this.state.currentlySelectedIndex[1];
         let nums = this.state.elementsArray, lastpass = true;
 
@@ -106,38 +113,56 @@ export default class Sorts extends React.Component {
         this.setState({ currentlySelectedIndex: [j, j + 1] });
 
         if (j >= nums.length - 1 - this.state.totalBubblePasses) {
-            if (this.state.lastPass && lastpass)
-                this.setState({ selectOpacity: false, currentlySorting: false, completelySorted: true });
-            else 
+            if (this.state.lastPass && lastpass) {
+                this.setState({  currentlySorting: false, completelySorted: true });
+                this.SortRepeater(true, this.BubbleSortNext);
+            } else {
                 this.setState({ currentlySelectedIndex: [0, 1], lastPass: true, totalBubblePasses: this.state.totalBubblePasses + 1 });
+            }
         }
 
         return;
     }
+    */
 
     // Bubble Sort Function
-    InstantBubbleSort() {
+    BubbleSort() {
         this.setState({ currentlySorting: true });
         console.log("Started Bubble Sort");
         
-        let finished = false;
-        while (!finished) {
-            finished = true;
-            let nums = this.state.elementsArray;
+        let finishedSorting = false, lastPass = true;
+        let i = 0, sortedElementsNumber = 0;
 
-            for (let i = 0; i < this.state.elementsArray.length - 1; i++) {
-                this.setState({ currentlySelectedIndex: [i, i + 1]});
+        const whileInterval = setInterval(() => {
+            if (finishedSorting || !this.state.currentlySorting) { 
+                finishedSorting = true;
+                this.setState({ currentlySorting: false });
+                console.log("Finished Bubble Sort");
+                clearInterval(whileInterval); 
+            } else {
+                let nums = this.state.elementsArray;
+                this.setState({ currentlySelectedIndex: [i, i + 1] });
+
                 if (nums[i] > nums[i + 1]) {
-                    finished = false;
+                    lastPass = false;
                     [ nums[i], nums[i + 1] ] = [ nums[i + 1], nums[i] ];
                     this.setState({ elementsArray: nums });
                 }
+
+                if (++i >= this.state.elementsArray.length - 1 - sortedElementsNumber) {
+                    if (lastPass) {
+                        finishedSorting = true;
+                        this.setState({ currentlySorting: false });
+                    } else {
+                        i = 0;
+                        lastPass = true;
+                    }
+                    sortedElementsNumber++;
+                }
             }
-        }
 
+        }, 200);
 
-
-        this.setState({ currentlySorting: false });
         return;
     }
     // ---------- FUNCTIONS END ----------
@@ -176,7 +201,7 @@ export default class Sorts extends React.Component {
                     <div style={{height: '8px', position:'relative', width:'100%', backgroundColor:"var(--secondary-color)", zIndex:"-1"}} />
                     <div id='sortContainer'>
                         {this.state.elementsArray.map((element, index) => {
-                            return <div key={index} className='sortelementparent' style={ (this.state.selectOpacity && this.state.currentlySelectedIndex.includes(index)) ? { opacity:'100%' } : { opacity:'80%' } } >{<SortElement value={ element } />}</div>;
+                            return <div key={index} className='sortelementparent' style={ (this.state.currentlySorting && this.state.currentlySelectedIndex.includes(index)) ? { opacity:'100%' } : { opacity:'80%' } } >{<SortElement value={ element } />}</div>;
                         })}
                     </div>
                     <div style={{height: '8px', position:'relative', width:'100%', backgroundColor:"var(--secondary-color)"}} />

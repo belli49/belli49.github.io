@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { BrowserRouter, Link, Route, Routes, Outlet } from "react-router-dom";
 
 import Sorts from './Sorting/Sorting.js';
+import ScrollToTop from './helperFunctions/scrollToTop';
 
 import './index.css';
 
@@ -252,21 +253,21 @@ class ContactSection extends React.Component {
 
 ReactDOM.render(
     <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<HomePage/>}>
-                <Route path="" element={<AboutSection/>} />
-                <Route path="About" element={<AboutSection/>} />
-                <Route path="Projects" element={<ProjectSection/>} />
-                <Route path="Contact" element={<ContactSection/>} />
-                <Route path="Projects/Sorting" element={<Sorts/>}>
+        <ScrollToTop />
+            <Routes>
+                <Route path="/" element={<HomePage/>}>
+                    <Route path="" element={<AboutSection/>} />
+                    <Route path="About" element={<AboutSection/>} />
+                    <Route path="Projects" element={<ProjectSection/>} />
+                    <Route path="Contact" element={<ContactSection/>} />
+                    <Route path="Projects/Sorting" element={<Sorts/>}>
 
+                    </Route>
                 </Route>
-            </Route>
-        </Routes>
+            </Routes>
     </BrowserRouter>,
     document.getElementById("loader")
 );
-
 
 
 // If you want to start measuring performance in your app, pass a function

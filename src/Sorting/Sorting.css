@@ -1,0 +1,91 @@
+@import "../index.css";
+
+#sorttypesbuttonbar {
+    position: relative;
+    height: 10vh;
+    width: 100%;
+    margin-top: 10vh;
+    overflow: hidden;
+    background-color: var(--secondary-color);
+
+    display: grid;
+    grid-template-columns: 30% 10% 5% 10% 5% 10% 30%;
+}
+
+#hiddensortcontent {
+    position: relative;
+    height: auto;
+    width: auto;
+}
+
+#sortbuttonsbar {
+    position: relative;
+    height: 10vh;
+    width: 100%;
+
+    text-align: center;
+
+    overflow: hidden;
+}
+
+.sortbutton {
+    background: none;
+    position: relative;
+    border: none;
+    height: 100%;
+    width: auto;
+
+    margin-right: 3vh;
+    margin-left: 3vh;
+
+    font-size: 1.3em;
+    color: var(--secondary-color);
+}
+
+.sortbutton:hover {
+    text-decoration: underline;
+}
+
+#sortContainer {
+    position: relative;
+    height: 50vh;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+
+    background-color: var(--secondary-color);
+}
+
+.sortelementparent {
+    position: relative;
+    height: 100%;
+    width: 30px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.sortelementchild {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    border-radius: 4px;
+
+    opacity: 80%;
+    background-color: var(--main-color);
+    color: var(--secondary-color);
+}
+
+#sortfloatingNumber {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    color: var(--primary-color);
+}
+
+.sortelementchild:hover,
+.sortelementparent:hover
+{
+    opacity: 100%;
+}

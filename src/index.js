@@ -209,7 +209,7 @@ class ProjectSection extends React.Component {
                     <div></div>
                     <Link to="/">
                         <div className='project-grid-item'>
-                            <a style={{position: 'relative', top: '8px'}}>This website!</a>
+                            <a style={{position: 'relative', top: '8px'}}>Game of Life</a>
                             <img
                                 src={ require('./img/site_proj_thumb.png') }
                                 draggable={'false'}

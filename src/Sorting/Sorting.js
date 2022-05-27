@@ -41,7 +41,6 @@ export default class Sorts extends React.Component {
         };
     }
 
-
     // ---------- FUNCTIONS START ----------
     // Adds Element to be sorted
     HandleAdd() {
@@ -75,7 +74,9 @@ export default class Sorts extends React.Component {
     }
 
     HandleReset() {
+        console.log("Sort Reset");
         this.setState({ ...this.state.initialState });
+        this.setState({ elementsArray: [] });
     }
 
     HandleRemove() {

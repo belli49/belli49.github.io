@@ -104,7 +104,7 @@ body {
     float: right;
     top: 0%;
     height: 100%;
-    width: 400px;
+    width: auto;
 }
 
 .topbarbutton {
@@ -345,4 +345,79 @@ body {
     position: relative;
     height: auto;
     width: auto;
+}
+
+#colorpalettebar {
+    position: relative;
+    height: 35vh;
+    width: 100%;
+    margin-top: 10vh;
+    overflow: hidden;
+    background-color: var(--secondary-color);
+
+    display: grid;
+    grid-template-columns: 16% 32% 4% 32% 16%;
+    grid-template-rows: auto auto 6vh;
+}
+
+.paletteButton {
+    position: relative;
+    border: none;
+    height: min-content;
+    top: 6px;
+    width: 100px;
+    padding: 0.5rem;
+    box-sizing: border-box;
+
+    margin-left: 2vh;
+
+    font-size: 1em;
+    border-radius: 0.5rem;
+    background-color: var(--subsecondary-color);
+    color: var(--main-color);
+
+    transition: background .125s,color .125s;
+    transition-property: all, transform;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+}
+
+.paletteButton:hover {
+    background-color: var(--main-color);
+    color: var(--secondary-color);
+
+    transition: background .125s,color .125s;
+    transition-property: all, transform;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+}
+
+.color-palette-input {
+    background: var(--subsecondary-color);
+    border: none;
+    border-radius: 0.5rem;
+    caret-color: var(--main-color);
+    color: var(--main-color);
+    font-size: 1rem;
+    outline: none;
+    padding: 0.5rem;
+
+    height: min-content;
+    width: 11vh;
+    position: relative;
+    top: 6.5px;
+
+}
+
+.paletteText {
+    position: inherit;
+    margin-right: 2vh;
+    top: 8px;
+}
+
+.palette-div {
+    position: relative;
+    margin-top: 6vh;
+    vertical-align: center;
+    text-align: center;
 }

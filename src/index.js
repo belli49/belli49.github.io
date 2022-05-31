@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect  } from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import { motion } from "framer-motion"
@@ -85,6 +86,8 @@ class TopBar extends React.Component {
                     <TopBarButton onClick={() => {this.props.onClick("Projects")}} value={"Projects"} />
                     <div className="divider"></div>
                     <TopBarButton onClick={() => {this.props.onClick("Contact")}} value={"Contact"} />
+                    <div className="divider"></div>
+                    <TopBarButton onClick={() => {this.props.onClick("ColorPalette")}} value={"ColorPalette"} />
                 </div>
             </div>
         )
@@ -110,7 +113,7 @@ class AboutSection extends React.Component {
                     <div id="aboutDivider">
                         <div className="title"><a className="titleText">{this.state.sectionElements[this.state.sectionNumber]}</a></div>
                         <div id="about">
-                            <p id="aboutText">Hello! I'm Pedro. Welcome to my website! Scroll down to learn a bit about me!</p>
+                            <p id="aboutText">Hello! I'm Pedro. Welcome to my website! Scroll down to learn a bit about me! You can also change this website's colour palette by clicking {'<ColorPalette>'} in the navigation bar!</p>
                         </div>
                     </div>
                     <div style={{position:'relative', height:'auto', width:'auto'}}>
@@ -155,9 +158,9 @@ class AboutSection extends React.Component {
                         {this.state.tools == 1 &&
                             <div className='curriculumList'>
                                 <ul>
-                                    <li>VSCode: My main text editor. What I use for almost every project.</li>
-                                    <li>Vim: Normally I just use the VIM extension for VSCode, but for quick alterations or algorithmic problems I like to use the terminal version of VIM.</li>
-                                    <li>wsl2: I like to use Ubuntu + Windows Terminal for a better, more dynamic workflow.</li>
+                                    <li>VSCode: My main text editor. What I use for almost everything.</li>
+                                    <li>Vim: Normally I just use the VIM extension for VSCode, but for quick alterations or algorithmic problems I use the terminal version of VIM.</li>
+                                    <li>Ubuntu Terminal: I use wsl2 + Ubuntu for a better, more dynamic workflow, as I prefer its terminal to the Widnwos cmd/PowerShell.</li>
                                     <li>Intermediate Excel: I had Excel classes from Middle School through High School. Although I don't use it for projects, I am quite comfortable with it.</li>
                                 </ul>
                             </div>
@@ -165,6 +168,137 @@ class AboutSection extends React.Component {
                     </div>
                 </div>
                 <div style={{position:'relative', width:'100%', height:'400px'}} />
+            </div>
+        );
+    }
+}
+
+class ColorPalette extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            mainColor: '#181818',
+            submainColor: '#282828',
+            secondaryColor: '#ffffff',
+            subsecondaryColor: '#ededed',
+        }
+    }
+
+    CheckHexcode (hexcode) {
+        if (hexcode.length != 7) return false;
+        if (hexcode.charAt(0) != '#') return false;
+
+        for (let i = 1; i < 7; i++) {
+            let charCode = hexcode.charCodeAt(i);
+            if (charCode < 48 || charCode > 102 || (charCode > 57 && charCode < 97)) return false;
+        }
+
+        return true;
+    }
+
+    HandleChangeMainColorInput (event) {
+        let hexcode = event.target.value;
+        this.setState({ mainColor: hexcode });
+    }
+    
+    HandleChangeSecondaryColorInput (event) {
+        let hexcode = event.target.value;
+        this.setState({ secondaryColor: hexcode });
+    }
+    
+    HandleChangeSubMainColorInput (event) {
+        let hexcode = event.target.value;
+        this.setState({ submainColor: hexcode });
+    }
+    
+    HandleChangeSubSecondaryColorInput (event) {
+        let hexcode = event.target.value;
+        this.setState({ subsecondaryColor: hexcode });
+    }
+
+    HandleChangeColor (colorVar) {
+        console.log(this.state);
+
+        switch (colorVar) {
+            case 'main':
+                if (this.CheckHexcode(this.state.mainColor))
+                    document.documentElement.style.setProperty('--main-color', this.state.mainColor);
+                break;
+
+            case 'secondary':
+                if (this.CheckHexcode(this.state.secondaryColor))
+                    document.documentElement.style.setProperty('--secondary-color', this.state.secondaryColor);
+                break;
+
+            case 'submain':
+                if (this.CheckHexcode(this.state.submainColor))
+                    document.documentElement.style.setProperty('--submain-color', this.state.submainColor);
+                break;
+
+            case 'subsecondary':
+                if (this.CheckHexcode(this.state.subsecondaryColor))
+                    document.documentElement.style.setProperty('--subsecondary-color', this.state.subsecondaryColor);
+                break;
+            
+            default:
+                break;
+        }
+
+        return;
+    }
+
+    render () {
+        return (
+            <div style={{position: 'relative', width: 'auto', height: 'auto'}}>
+                <div style={{position: 'relative', height: 'auto', width: '100%', marginTop: '10vh', textAlign: 'center'}}>
+                    <Link to="/Projects">
+                        <div className="gg-chevron-down" style={{zIndex:'1' , transform:'rotate(90deg) scale(2)', position:'absolute', left:'30vh', top:'1.9vh'}}></div>
+                    </Link>
+                    <a style={{position: 'relative', fontSize: '2em', color: 'white', cursor: 'default'}}>
+                        Change this website's colors!
+                    </a>
+                </div>
+
+                <div id='colorpalettebar'>
+                    <div/>
+                    <div className='palette-div'>
+                        <a className='paletteText'>Main Color</a>
+                        <input className='color-palette-input' onChange={this.HandleChangeMainColorInput.bind(this)}
+                        type={"text"} min={"1"} max={"100"} tabIndex={'0'}
+                        placeholder={'#181818'}
+                        ></input>
+                        <button className='paletteButton' onClick={this.HandleChangeColor.bind(this, 'main')}>Change</button>
+                    </div>
+                    <div/>
+                    <div className='palette-div'>
+                        <a className='paletteText'>Secondary Color</a>
+                        <input className='color-palette-input' onChange={this.HandleChangeSecondaryColorInput.bind(this)}
+                        type={"text"} min={"1"} max={"100"} tabIndex={'0'}
+                        placeholder={'#ffffff'}
+                        ></input>
+                        <button className='paletteButton' onClick={this.HandleChangeColor.bind(this, 'secondary')}>Change</button>
+                    </div>
+                    <div/>
+                    <div/>
+                    <div className='palette-div'>
+                        <a className='paletteText'>Sub-main Color</a>
+                        <input className='color-palette-input' onChange={this.HandleChangeSubMainColorInput.bind(this)}
+                        type={"text"} min={"1"} max={"100"} tabIndex={'0'}
+                        placeholder={'#282828'}
+                        ></input>
+                        <button className='paletteButton' onClick={this.HandleChangeColor.bind(this, 'submain')}>Change</button>
+                    </div>
+                    <div/>
+                    <div className='palette-div'>
+                        <a className='paletteText'>Sub-secondary Color</a>
+                        <input className='color-palette-input' onChange={this.HandleChangeSubSecondaryColorInput.bind(this)}
+                        type={"text"} min={"1"} max={"100"} tabIndex={'0'}
+                        placeholder={'#ededed'}
+                        ></input>
+                        <button className='paletteButton'  onClick={this.HandleChangeColor.bind(this, 'subsecondary')}>Change</button>
+                    </div>
+                    <div/>
+                </div>
             </div>
         );
     }
@@ -181,7 +315,7 @@ class ProjectSection extends React.Component {
         return(
             <div style={{position: 'relative', width: 'auto', height: 'auto'}}>
                 <div style={{position: 'relative', height: 'auto', width: '100%', top: '10vh', textAlign: 'center'}}>
-                    <a style={{position: 'relative', fontSize: '2em', color: 'white', cursor: 'default'}}>Projects</a>
+                    <a style={{position: 'relative', fontSize: '2em', color: 'white', cursor: 'default'}}>Projects (Click to view)</a>
                 </div>
                 <div className='project-grid'>
                     <div></div>
@@ -263,6 +397,7 @@ ReactDOM.render(
                     <Route path="Projects/Sorting" element={<Sorts/>}>
 
                     </Route>
+                    <Route path="ColorPalette" element={<ColorPalette/>}/>
                 </Route>
             </Routes>
     </BrowserRouter>,

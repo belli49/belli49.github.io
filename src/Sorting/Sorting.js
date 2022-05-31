@@ -23,12 +23,14 @@ export default class Sorts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sort: "bubble",
+            sort: "",
             totalBubblePasses: 0,
             elementsArray: [],
             currentlySorting: false,
             completelySorted: false,
             currentlySelectedIndex: [0, 1],
+            selectedElement: -1,
+            inputvalue: 0,
 
             initialState: {
                 totalBubblePasses: 0,
@@ -36,14 +38,20 @@ export default class Sorts extends React.Component {
                 currentlySorting: false,
                 completelySorted: false,
                 currentlySelectedIndex: [0, 1],
+                selectedElement: -1,
+                inputvalue: 0,
             },
         };
-
-        this.HandleChangeBubble = () => {this.HandleChangeSort("bubble")}
-        this.HandleChangeTest = () => {this.HandleChangeSort("test")}
     }
 
     // ---------- FUNCTIONS START ----------
+
+    // Input field OnChange Handler
+    HandleInputChange (event) {
+        this.setState({ inputvalue: event.target.value });
+
+        return;
+    }
 
     // ---------- ONCLICK HANDLERS START ----------
 
@@ -52,6 +60,27 @@ export default class Sorts extends React.Component {
             this.HandleReset();
             this.setState({ sort: sortType });
         }
+
+        return;
+    }
+
+    HandleValueChange() {
+        let nums = this.state.elementsArray, i = this.state.selectedElement, newValue = this.state.inputvalue;
+        
+        if (newValue >= 100) newValue = 100;
+        else if (newValue < 0) newValue = 0;
+
+        nums[i] = newValue;
+
+        this.setState({  elementsArray: nums  });
+
+        return;
+    }
+
+    HandleValueChangeToggle(index) {
+        if (this.state.currentlySorting) return;
+        console.log("Element Selected");
+        this.setState({ selectedElement: index });
 
         return;
     }
@@ -69,13 +98,19 @@ export default class Sorts extends React.Component {
     }
 
     HandleStart() {
-        //if (this.state.currentlySorting) return;
-        if (this.state.completelySorted) return;
+        if (this.state.currentlySorting) return;
+        // if (this.state.completelySorted) return;
         if (this.state.elementsArray.length < 2) return;
+
+        this.HandleValueChangeToggle(-1);
 
         switch (this.state.sort) {
             case 'bubble':
                 this.BubbleSort();
+                break;
+
+            case 'insertion':
+                this.InsertionSort();
                 break;
 
             default:
@@ -126,7 +161,7 @@ export default class Sorts extends React.Component {
         this.setState({ currentlySorting: true });
         console.log("Started Bubble Sort");
         
-        let finishedSorting = false, lastPass = true;
+        let finishedSorting = false, lastPass = true, firstPass = true;
         let i = 0, sortedElementsNumber = 0;
 
         const whileInterval = setInterval(() => {
@@ -137,7 +172,12 @@ export default class Sorts extends React.Component {
                 clearInterval(whileInterval); 
             } else {
                 let nums = this.state.elementsArray;
-                this.setState({ currentlySelectedIndex: [i, i + 1] });
+
+                if (firstPass) {
+                    this.setState({ currentlySelectedIndex: [i, i + 1] });
+                    firstPass = false;
+                    return;
+                }
 
                 if (nums[i] > nums[i + 1]) {
                     lastPass = false;
@@ -145,24 +185,82 @@ export default class Sorts extends React.Component {
                     this.setState({ elementsArray: nums });
                 }
 
-                if (++i >= this.state.elementsArray.length - 1 - sortedElementsNumber) {
-                    if (lastPass) {
-                        finishedSorting = true;
-                        this.setState({ currentlySorting: false });
-                    } else {
-                        i = 0;
-                        lastPass = true;
+                i++;
+
+                setTimeout(() => {
+                    this.setState({ currentlySelectedIndex: [i, i + 1] });
+
+                    if (i >= this.state.elementsArray.length - 1 - sortedElementsNumber) {
+                        if (lastPass) {
+                            finishedSorting = true;
+                            this.setState({ currentlySorting: false });
+                        } else {
+                            i = 0;
+                            lastPass = true;
+                            firstPass = true;
+                        }
+                        sortedElementsNumber++;
                     }
-                    sortedElementsNumber++;
-                }
+                }, 250);
+                
             }
 
-        }, 200);
+        }, 500);
 
         return;
     }
 
     // Insertion Sort Function
+    InsertionSort() {
+        this.setState({ currentlySorting: true });
+        console.log("Started Insertion Sort");
+        
+        let i = 1, j = 0, finishedSorting = false, foundWhereToInsert = false;
+
+        const whileInterval = setInterval(() => {
+            if (finishedSorting || !this.state.currentlySorting) { 
+                finishedSorting = true;
+                this.setState({ currentlySorting: false });
+                console.log("Finished Insertion Sort");
+                clearInterval(whileInterval); 
+            } else {
+                let nums = this.state.elementsArray;
+                this.setState({ currentlySelectedIndex: [j, i] });
+
+                if (!foundWhereToInsert && nums[i] <= nums[j]) {
+                    foundWhereToInsert = true;
+                    return;
+                }
+
+                if (foundWhereToInsert) {
+                    foundWhereToInsert = false;
+                    let temp = nums[i], tempIndex = i;
+                    while (j <= --tempIndex) {
+                        nums[tempIndex + 1] = nums[tempIndex];
+                    }
+                    nums[j] = temp;
+                    this.setState({ elementsArray: nums, currentlySelectedIndex: [j, j+1] });
+
+                    i++;
+                    j = 0;
+                    return;
+                }
+
+                if (++j == i) {
+                    j = 0;
+                    i++;
+                }
+
+                if (i >= this.state.elementsArray.length) {
+                    finishedSorting = true;
+                    this.setState({ currentlySorting: false });
+                }
+            }
+
+        }, 250);
+
+        return;
+    }
 
     // ---------- SORT FUNCTIONS END ----------
     // ---------- FUNCTIONS END ----------
@@ -181,33 +279,53 @@ export default class Sorts extends React.Component {
 
                 <div id='sorttypesbuttonbar'>
                     <div/>
-                    <button className='sorttypebutton' onClick={this.HandleChangeBubble.bind(this)}>Bubble</button>
+                    <button className='sorttypebutton' 
+                        onClick={this.HandleChangeSort.bind(this, "bubble")}
+                        style={(this.state.sort == 'bubble') ? {backgroundColor: 'var(--main-color)', color:'var(--secondary-color)'} : {}}
+                    >Bubble</button>
                     <div/>
-                    <button className='sorttypebutton' onClick={this.HandleChangeTest.bind(this)}>Test</button>
+                    <button className='sorttypebutton' 
+                        onClick={this.HandleChangeSort.bind(this, "insertion")}
+                        style={(this.state.sort == 'insertion') ? {backgroundColor: 'var(--main-color)', color:'var(--secondary-color)'} : {}}
+                    >Insertion</button>
                     <div/>
-                    <button className='sorttypebutton' onClick={this.HandleChangeTest.bind(this)}>Test</button>
+                    <button className='sorttypebutton' 
+                        onClick={this.HandleChangeSort.bind(this, "test")}
+                        style={(this.state.sort == 'test') ? {backgroundColor: 'var(--main-color)', color:'var(--secondary-color)'} : {}}
+                    >Test</button>
                     <div/>
                 </div>
 
-                <div id='hiddensortcontent'>
+                <div id='hiddensortcontent' style={(this.state.sort == '') ? {maxHeight: '0px'} : {}}>
                     <div id='sortbuttonsbar'>
                         <button className='sortbutton' onClick={this.HandleAdd.bind(this) }>Add</button>
                         <button className='sortbutton' onClick={this.HandleRemove.bind(this)} >Remove</button>
                         <button className='sortbutton' onClick={this.HandleRandomise.bind(this)}>Randomise</button>
                         <button className='sortbutton' onClick={this.HandleReset.bind(this)} >Reset</button>
-                        <button className='sortbutton' onClick={this.HandleStart.bind(this)} >Start</button>
+                        <button className='sortbutton' onClick={this.HandleStart.bind(this)} style={this.state.currentlySorting ? {backgroundColor: 'var(--secondary-color)', color: 'var(--main-color)'} : {}} >Start</button>
                     </div>
 
-                    <div style={{height: '8px', position:'relative', width:'100%', backgroundColor:"var(--secondary-color)", zIndex:"-1"}} />
+                    <div id='extraButtonLayer' 
+                    style={(this.state.selectedElement == -1) ? {maxHeight: "0px"} : {maxHeight: "66px"}}>
+                        <input id='element-value-input' onChange={this.HandleInputChange.bind(this)}
+                        type={"number"} min={"1"} max={"100"} tabIndex={'0'}
+                        placeholder={this.state.elementsArray[this.state.selectedElement]}
+                        ></input>
+                        <button className='sortbutton' style={{top:'6px'}} onClick={this.HandleValueChange.bind(this)}>Change</button>
+                    </div>
+
+                    <div style={{height: '8px', position:'relative', width:'100%', backgroundColor:"var(--secondary-color)", zIndex:"1"}} />
                     <div id='sortContainer'>
                         {this.state.elementsArray.map((element, index) => {
-                            return <div key={index} className='sortelementparent' style={ (this.state.currentlySorting && this.state.currentlySelectedIndex.includes(index)) ? { opacity:'100%' } : { opacity:'80%' } } >{<SortElement value={ element } />}</div>;
+                            return <div key={index} 
+                            className='sortelementparent' 
+                            onClick={this.HandleValueChangeToggle.bind(this, index)} 
+                            style={ (this.state.selectedElement == index || this.state.currentlySorting && this.state.currentlySelectedIndex.includes(index)) ? { opacity:'100%' } : { opacity:'80%' } } >
+                                {<SortElement value={ element } />}
+                            </div>;
                         })}
                     </div>
                     <div style={{height: '8px', position:'relative', width:'100%', backgroundColor:"var(--secondary-color)"}} />
-                    <div>
-
-                    </div>
                 </div>
             </div>
         );

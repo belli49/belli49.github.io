@@ -200,9 +200,9 @@ class ProjectSection extends React.Component {
                         <div className='project-grid-item'>
                             <a style={{position: 'relative', top: '8px'}}>Sort Visualiser</a>
                             <img
-                                src={ require('./img/site_proj_thumb.png') }
+                                src={ require('./img/sort_proj_thumb.png') }
                                 draggable={'false'}
-                                style={{width:'100%', position: 'relative', top: '20px'}}
+                                style={{width:'70%', position: 'relative', top: '20px'}}
                             />
                         </div>
                     </Link>

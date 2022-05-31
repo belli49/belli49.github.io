@@ -14,8 +14,40 @@
 
 #hiddensortcontent {
     position: relative;
-    height: auto;
+    max-height: 500px;
     width: auto;
+    overflow: hidden;
+
+    transition: height 1.0s, ease 0.25s, transform 0.5s, ease 0.25s;
+}
+
+input {
+    background: var(--submain-color);
+    border: none;
+    border-radius: 0.5rem;
+    caret-color: var(--secondary-color);
+    color: var(--secondary-color);
+    font-size: 1rem;
+    outline: none;
+    padding: 0.5rem;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+#element-value-input {
+    height: min-content;
+    position: relative;
+    top: 7px;
 }
 
 #sortbuttonsbar {
@@ -105,6 +137,18 @@
     background-color: var(--secondary-color);
 }
 
+#extraButtonLayer {
+    position: relative;
+    width: 100%;
+    height: 66px;
+    overflow: hidden;
+    text-align: center;
+
+    background-color: var(--primary-color);
+
+    transition: height 0.5s, ease 0.25s, transform 0.5s, ease 0.25s;
+}
+
 .sortelementparent {
     position: relative;
     height: 100%;
@@ -138,7 +182,7 @@
 {
     opacity: 100%;
 
-    transition: background .125s,color .125s;
+    transition: background .125s, color .125s;
     transition-property: all, transform;
     transition-timing-function: ease, ease;
     transition-delay: 0s, 0s;

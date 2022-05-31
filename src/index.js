@@ -181,6 +181,11 @@ class ColorPalette extends React.Component {
             submainColor: '#282828',
             secondaryColor: '#ffffff',
             subsecondaryColor: '#ededed',
+
+            mainWrong: false,
+            secondaryWrong: false,
+            submainWrong: false,
+            subsecondaryWrong: false,
         }
     }
 
@@ -221,23 +226,31 @@ class ColorPalette extends React.Component {
 
         switch (colorVar) {
             case 'main':
-                if (this.CheckHexcode(this.state.mainColor))
+                if (this.CheckHexcode(this.state.mainColor)) {
                     document.documentElement.style.setProperty('--main-color', this.state.mainColor);
+                    this.setState({ mainWrong: false });
+                } else this.setState({ mainWrong: true });
                 break;
 
             case 'secondary':
-                if (this.CheckHexcode(this.state.secondaryColor))
+                if (this.CheckHexcode(this.state.secondaryColor)) {
                     document.documentElement.style.setProperty('--secondary-color', this.state.secondaryColor);
+                    this.setState({ secondaryWrong: false });
+                } else this.setState({ secondaryWrong: true });
                 break;
 
             case 'submain':
-                if (this.CheckHexcode(this.state.submainColor))
+                if (this.CheckHexcode(this.state.submainColor)) {
                     document.documentElement.style.setProperty('--submain-color', this.state.submainColor);
+                    this.setState({ submainWrong: false });
+                } else this.setState({ submain: true });
                 break;
 
             case 'subsecondary':
-                if (this.CheckHexcode(this.state.subsecondaryColor))
+                if (this.CheckHexcode(this.state.subsecondaryColor)) {
                     document.documentElement.style.setProperty('--subsecondary-color', this.state.subsecondaryColor);
+                    this.setState({ subsecondaryWrong: false });
+                } else this.setState({ subsecondaryWrong: true });
                 break;
             
             default:
@@ -265,7 +278,7 @@ class ColorPalette extends React.Component {
                         <a className='paletteText'>Main Color</a>
                         <input className='color-palette-input' onChange={this.HandleChangeMainColorInput.bind(this)}
                         type={"text"} min={"1"} max={"100"} tabIndex={'0'}
-                        placeholder={'#181818'}
+                        placeholder={'#181818'} style={(this.state.mainWrong) ? {background: '#ff5047'} : {}}
                         ></input>
                         <button className='paletteButton' onClick={this.HandleChangeColor.bind(this, 'main')}>Change</button>
                     </div>
@@ -274,7 +287,7 @@ class ColorPalette extends React.Component {
                         <a className='paletteText'>Secondary Color</a>
                         <input className='color-palette-input' onChange={this.HandleChangeSecondaryColorInput.bind(this)}
                         type={"text"} min={"1"} max={"100"} tabIndex={'0'}
-                        placeholder={'#ffffff'}
+                        placeholder={'#ffffff'} style={(this.state.secondaryWrong) ? {background: 'ff5047'} : {}}
                         ></input>
                         <button className='paletteButton' onClick={this.HandleChangeColor.bind(this, 'secondary')}>Change</button>
                     </div>
@@ -284,7 +297,7 @@ class ColorPalette extends React.Component {
                         <a className='paletteText'>Sub-main Color</a>
                         <input className='color-palette-input' onChange={this.HandleChangeSubMainColorInput.bind(this)}
                         type={"text"} min={"1"} max={"100"} tabIndex={'0'}
-                        placeholder={'#282828'}
+                        placeholder={'#282828'} style={(this.state.submainWrong) ? {background: 'ff5047'} : {}}
                         ></input>
                         <button className='paletteButton' onClick={this.HandleChangeColor.bind(this, 'submain')}>Change</button>
                     </div>
@@ -293,7 +306,7 @@ class ColorPalette extends React.Component {
                         <a className='paletteText'>Sub-secondary Color</a>
                         <input className='color-palette-input' onChange={this.HandleChangeSubSecondaryColorInput.bind(this)}
                         type={"text"} min={"1"} max={"100"} tabIndex={'0'}
-                        placeholder={'#ededed'}
+                        placeholder={'#ededed'} style={(this.state.subsecondaryWrong) ? {background: 'ff5047'} : {}}
                         ></input>
                         <button className='paletteButton'  onClick={this.HandleChangeColor.bind(this, 'subsecondary')}>Change</button>
                     </div>

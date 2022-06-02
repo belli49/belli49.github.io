@@ -14,7 +14,7 @@
 
 #hiddensortcontent {
     position: relative;
-    max-height: 500px;
+    max-height: 100vh;
     width: auto;
     overflow: hidden;
 

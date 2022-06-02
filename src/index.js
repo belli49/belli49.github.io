@@ -6,7 +6,8 @@ import { motion } from "framer-motion"
 import { BrowserRouter, Link, Route, Routes, Outlet } from "react-router-dom";
 
 import Sorts from './Sorting/Sorting.js';
-import ScrollToTop from './helperFunctions/scrollToTop';
+import ScrollToTop from './helperFunctions/scrollToTop.js';
+import GameOfLife from './Life/life.js';
 
 import './index.css';
 
@@ -113,7 +114,7 @@ class AboutSection extends React.Component {
                     <div id="aboutDivider">
                         <div className="title"><a className="titleText">{this.state.sectionElements[this.state.sectionNumber]}</a></div>
                         <div id="about">
-                            <p id="aboutText">Hello! I'm Pedro. Welcome to my website! Scroll down to learn a bit about me! You can also change this website's colour palette by clicking {'<ColorPalette>'} in the navigation bar!</p>
+                            <p id="aboutText">Hello! I'm Pedro. Welcome to my website! Scroll down to learn a bit about me. You can check some projects I made at the {'<Projects>'} section. You can also change this website's colour palette by clicking {'<ColorPalette>'} in the navigation bar!</p>
                         </div>
                     </div>
                     <div style={{position:'relative', height:'auto', width:'auto'}}>
@@ -355,7 +356,7 @@ class ProjectSection extends React.Component {
                     </Link>
                     <div></div>
                     <div></div>
-                    <Link to="/">
+                    <Link to="/Projects/GameOfLife">
                         <div className='project-grid-item'>
                             <a style={{position: 'relative', top: '8px'}}>Game of Life</a>
                             <img
@@ -405,11 +406,13 @@ ReactDOM.render(
                 <Route path="/" element={<HomePage/>}>
                     <Route path="" element={<AboutSection/>} />
                     <Route path="About" element={<AboutSection/>} />
-                    <Route path="Projects" element={<ProjectSection/>} />
-                    <Route path="Contact" element={<ContactSection/>} />
-                    <Route path="Projects/Sorting" element={<Sorts/>}>
 
-                    </Route>
+                    <Route path="Projects" element={<ProjectSection/>} />
+                    <Route path="Projects/Sorting" element={<Sorts/>} />
+                    <Route path="Projects/GameOfLife" element={<GameOfLife/>} />
+
+                    <Route path="Contact" element={<ContactSection/>} />
+
                     <Route path="ColorPalette" element={<ColorPalette/>}/>
                 </Route>
             </Routes>

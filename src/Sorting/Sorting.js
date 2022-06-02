@@ -201,11 +201,11 @@ export default class Sorts extends React.Component {
                         }
                         sortedElementsNumber++;
                     }
-                }, 250);
+                }, 200);
                 
             }
 
-        }, 500);
+        }, 400);
 
         return;
     }
@@ -260,6 +260,11 @@ export default class Sorts extends React.Component {
         }, 250);
 
         return;
+    }
+
+    // Merge Sort Function
+    MergeSort(array, indexArray) {
+       
     }
 
     // ---------- SORT FUNCTIONS END ----------

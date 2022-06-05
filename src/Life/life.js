@@ -7,11 +7,20 @@ import './life.css';
 import '../index.css';
 import '../Sorting/Sorting.css';
 
-function Square(props) {
-    return (
-    <div className='gameelementchild' style={(props.value ? {backgroundColor: 'var(--main-color)'} : {backgroundColor: 'var(--secondary-color)'})}>
-    </div>
-    );
+class Square extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+    }
+
+    
+    render() {
+        return (
+        <div className='gameelementchild' style={(this.props.value[0] ? {opacity: '100%'} : {})}>
+        </div>
+        );
+    }
 }
 
 
@@ -19,9 +28,129 @@ export default class GameOfLife extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            squaresArray: [...Array(58)].map(e => Array(21).fill(1)),
+            squaresArray: [...Array(58)].map(e => Array(21).fill(0)),
+            resetArray: 0,
+            currentlyPlaying: false,
         };
     }
+
+    // ---------- FUNCTION DEF START ----------
+
+    HandleSquareClick(position) {
+        let arr = this.state.squaresArray;
+        let row = position[0], column = position[1];
+
+        arr[row][column] = (arr[row][column] == 1) ? 0 : 1;
+
+        this.setState({ squaresArray: arr, resetArray: arr });
+    }
+
+    HandleStart() {
+        if (!this.state.currentlyPlaying) {
+            this.GameHandler();
+        } else {
+            this.setState({ currentlyPlaying: false });
+        }
+    }
+
+    HandleClear() {
+        const newBoard = [...Array(58)].map(e => Array(21).fill(0));
+
+        console.log('cleared');
+        this.setState({ squaresArray: newBoard });
+    }
+
+    HandleReset() {
+        if (!this.state.resetArray) return;
+
+        this.setState({ squaresArray: this.state.resetArray });
+    }
+
+    HandleNext() {
+        let squareCheckArray = [...Array(58)].map(e => Array(21).fill(0));
+        let newBoard = [...Array(58)].map(e => Array(21).fill(0));
+
+        for (let i = 0; i < 58; i++) {
+            for (let j = 0; j < 21; j++) {
+                if (!this.state.squaresArray[i][j]) continue;
+                if (i > 0) {
+                    if (j > 0) squareCheckArray[i - 1][j - 1]++;
+                    squareCheckArray[i - 1][j]++;
+                    if (j < 20) squareCheckArray[i - 1][j + 1]++;
+                }
+
+                if (j > 0) squareCheckArray[i][j - 1]++;
+                if (j < 20) squareCheckArray[i][j + 1]++;
+
+                if (i < 57) {
+                    if (j > 0) squareCheckArray[i + 1][j - 1]++;
+                    squareCheckArray[i + 1][j]++;
+                    if (j < 20) squareCheckArray[i + 1][j + 1]++;
+                }
+            }
+        }
+
+        for (let i = 0; i < 58; i++) {
+            for (let j = 0; j < 21; j++) {
+                if (this.state.squaresArray[i][j] && (squareCheckArray[i][j] == 2 || squareCheckArray[i][j] == 3))
+                    newBoard[i][j] = 1;
+                else if (squareCheckArray[i][j] == 3) newBoard[i][j] = 1;
+            }
+        }
+
+        this.setState({ squaresArray: newBoard });
+    }
+
+    GameHandler() {
+        this.setState({ currentlyPlaying: true });
+
+        const gameNextTurn =  setInterval(() => {
+            if (!this.state.currentlyPlaying) {
+                clearInterval(gameNextTurn);
+                console.log('cleared interval');
+            }
+
+            console.log('started turn');
+
+            let squareCheckArray = [...Array(58)].map(e => Array(21).fill(0));
+            let newBoard = [...Array(58)].map(e => Array(21).fill(0));
+
+            for (let i = 0; i < 58; i++) {
+                for (let j = 0; j < 21; j++) {
+                    if (!this.state.squaresArray[i][j]) continue;
+                    if (i > 0) {
+                        if (j > 0) squareCheckArray[i - 1][j - 1]++;
+                        squareCheckArray[i - 1][j]++;
+                        if (j < 20) squareCheckArray[i - 1][j + 1]++;
+                    }
+
+                    if (j > 0) squareCheckArray[i][j - 1]++;
+                    if (j < 20) squareCheckArray[i][j + 1]++;
+
+                    if (i < 57) {
+                        if (j > 0) squareCheckArray[i + 1][j - 1]++;
+                        squareCheckArray[i + 1][j]++;
+                        if (j < 20) squareCheckArray[i + 1][j + 1]++;
+                    }
+                }
+            }
+
+            for (let i = 0; i < 58; i++) {
+                for (let j = 0; j < 21; j++) {
+                    if (this.state.squaresArray[i][j] && (squareCheckArray[i][j] == 2 || squareCheckArray[i][j] == 3))
+                        newBoard[i][j] = 1;
+                    else if (squareCheckArray[i][j] == 3) newBoard[i][j] = 1;
+                }
+            }
+
+            console.log('ended turn');
+
+            this.setState({ squaresArray: newBoard });
+
+        }, 250);
+    }
+
+    // ---------- FUNCTION DEF END ----------
 
     render() {
         return (
@@ -35,19 +164,27 @@ export default class GameOfLife extends React.Component {
                     </a>
                 </div>
 
-                <div id='sorttypesbuttonbar'>
+                <div id='gameOfLifeButtonsBar'>
                     <div/>
                     <button className='sorttypebutton' 
                         style={(this.state.sort == 'bubble') ? {backgroundColor: 'var(--main-color)', color:'var(--secondary-color)'} : {}}
+                        onClick={this.HandleClear.bind(this)}
                     >Clear</button>
                     <div/>
                     <button className='sorttypebutton' 
                         style={(this.state.sort == 'insertion') ? {backgroundColor: 'var(--main-color)', color:'var(--secondary-color)'} : {}}
+                        onClick={this.HandleReset.bind(this)}
                     >Reset</button>
                     <div/>
                     <button className='sorttypebutton' 
-                        style={(this.state.sort == 'test') ? {backgroundColor: 'var(--main-color)', color:'var(--secondary-color)'} : {}}
-                    >Start</button>
+                        style={(this.state.sort == 'insertion') ? {backgroundColor: 'var(--main-color)', color:'var(--secondary-color)'} : {}}
+                        onClick={this.HandleNext.bind(this)}
+                    >Next</button>
+                    <div/>
+                    <button className='sorttypebutton' 
+                        style={ (this.state.currentlyPlaying) ? {backgroundColor: 'var(--main-color)', color: 'var(--secondary-color)'} : {} }
+                        onClick={this.HandleStart.bind(this)}
+                    >{ (this.state.currentlyPlaying) ? 'Stop' : 'Start' }</button>
                     <div/>
                 </div>
 
@@ -58,8 +195,10 @@ export default class GameOfLife extends React.Component {
                         return <div>
                             { element.map((gameSquare, column) => {
                                 return <div key={(column + index*element.length)}
-                                className='gameelementparent' >
-                                    <Square value={gameSquare} />
+                                className='gameelementparent' 
+                                onClick={this.HandleSquareClick.bind(this, [index, column])}
+                                >
+                                    <Square value={[gameSquare]} />
                                 </div>;
                             })}
                         </div>;

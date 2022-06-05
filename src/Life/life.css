@@ -1,10 +1,23 @@
 @import '../index.css';
 
+#gameOfLifeButtonsBar {
+    position: relative;
+    height: 66px;
+    width: 100%;
+    margin-top: 10vh;
+    overflow: hidden;
+    background-color: var(--secondary-color);
+
+    display: grid;
+    grid-template-columns: 22.5% 10% 5% 10% 5% 10% 5% 10% 22.5%;
+}
+
 #gameContainer {
     position: relative;
     height: 70vh;
     width: 100%;
     background-color: var(--secondary-color);
+    padding-left: 2.5vh;
     display: grid;
     gap: 2px;
     grid-template-rows: repeat(21, 3vh);
@@ -24,8 +37,13 @@
     margin-top: 2px;
     border-radius: 0.3rem;
     opacity: 30%;
+    background-color: var(--main-color);
+
+    transition: height 0.5s, ease 0.25s, transform 0.5s, ease 0.25s;
 }
 
 .gameelementchild:hover {
     opacity: 100%;
+
+    transition: height 0.5s, ease 0.25s, transform 0.5s, ease 0.25s;
 }

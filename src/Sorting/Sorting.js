@@ -297,7 +297,7 @@ export default class Sorts extends React.Component {
                     <button className='sorttypebutton' 
                         onClick={this.HandleChangeSort.bind(this, "test")}
                         style={(this.state.sort == 'test') ? {backgroundColor: 'var(--main-color)', color:'var(--secondary-color)'} : {}}
-                    >Test</button>
+                    >Placeholder</button>
                     <div/>
                 </div>
 

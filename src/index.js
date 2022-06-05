@@ -360,9 +360,9 @@ class ProjectSection extends React.Component {
                         <div className='project-grid-item'>
                             <a style={{position: 'relative', top: '8px'}}>Game of Life</a>
                             <img
-                                src={ require('./img/site_proj_thumb.png') }
+                                src={ require('./img/life_proj_thumb.png') }
                                 draggable={'false'}
-                                style={{width:'100%', position: 'relative', top: '20px'}}
+                                style={{width:'80%', position: 'relative', top: '20px'}}
                             />
                         </div>
                     </Link>

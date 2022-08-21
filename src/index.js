@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect  } from 'react';
+import { useEffect, useState  } from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import { motion } from "framer-motion"
@@ -11,6 +11,12 @@ import GameOfLife from './Life/life.js';
 
 import './index.css';
 
+function App() {
+    useEffect(() => {
+        console.log('test');
+    })
+}
+
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
@@ -19,8 +25,18 @@ class HomePage extends React.Component {
         };
     }
 
-    handleClick(value) {
-        
+    componentDidMount() {
+        try {
+            fetch('https://pf-server-test.herokuapp.com/')
+                .then(response => response.json())
+                .then(data => console.log(data));
+        } catch (error) {
+            console.log('error: ', error);
+        }
+    }
+
+    handleClick(val) {
+        console.log('section changed to ' + val);
     }
 
     render() { 

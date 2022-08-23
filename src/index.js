@@ -11,10 +11,13 @@ import GameOfLife from './Life/life.js';
 
 import './index.css';
 
-function App() {
-    useEffect(() => {
-        console.log('test');
-    })
+const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+
+const axios = require('axios');
+var config ={
+    method: 'get',
+    url: 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry&key=' + GOOGLE_API_KEY,
+    headers: { }
 }
 
 class HomePage extends React.Component {
@@ -31,8 +34,16 @@ class HomePage extends React.Component {
                 .then(response => response.json())
                 .then(data => console.log(data));
         } catch (error) {
-            console.log('error: ', error);
+            console.log('Private server error: ', error);
         }
+
+        axios(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
     handleClick(val) {

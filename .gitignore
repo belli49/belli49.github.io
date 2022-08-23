@@ -21,5 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-db.config.js
-db.config.js
+
+// store API keys, etc
+.env

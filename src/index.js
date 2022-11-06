@@ -146,7 +146,7 @@ class AboutSection extends React.Component {
                     {this.state.education == 1 &&
                         <div className='curriculumList'>
                             <ul>
-                                <li>Tohoku University: Bachelor in Computer Engineering. Overall GPA: 3.42/4, Major GPA 3.55/4 (as of beginning of 5th semester, 2022).</li>
+                                <li>Tohoku University: Bachelor in Computer Engineering. Overall GPA: 3.48/4, Major GPA 3.64/4 (as of beginning of 6th semester, 2022).</li>
                                 <li>MEXT (Japan's Ministry of Education, Culture, Sports, Science and Technology) Scholarship grantee.</li>
                                 <li>Osaka University CJLC intensive Japanese language and culture course.</li>
                                 <li>Native Portuguese, advanced English and Japanese, intermediade Spanish.</li>
@@ -384,16 +384,35 @@ class ProjectSection extends React.Component {
                         </div>
                     </Link>
                     <div></div>
-                    <Link to="/">
-                        <div className='project-grid-item'>
-                            <a style={{position: 'relative', top: '8px'}}>This website!</a>
-                            <img
-                                src={ require('./img/site_proj_thumb.png') }
-                                draggable={'false'}
-                                style={{width:'100%', position: 'relative', top: '20px'}}
-                            />
-                        </div>
-                    </Link>
+                    <div className='project-grid-item'>
+                        <a style={{position: 'relative', top: '8px'}}
+                        href='https://github.com/belli49'>Restaurant Congestion Viewer</a>
+                        <img
+                            src={ require('./img/restaurant1_proj_thumb.png') }
+                            draggable={'false'}
+                            style={{width:'100%', position: 'relative', top: '20px'}}
+                        />
+                    </div>
+                    <div></div>
+                    <div></div>
+                    <div className='project-grid-item'>
+                        <a style={{position: 'relative', top: '8px'}}
+                        href='https://github.com/belli49/paint_clone'>Paint Clone</a>
+                        <img
+                            src={ require('./img/paint_proj_thumb.png') }
+                            draggable={'false'}
+                            style={{width:'80%', position: 'relative', top: '20px'}}
+                        />
+                    </div>
+                    <div></div>
+                    <div className='project-grid-item'>
+                        <a style={{position: 'relative', top: '8px'}}>Unity Games</a>
+                        <img
+                            src={ require('./img/unity_proj_thumb.png') }
+                            draggable={'false'}
+                            style={{width:'100%', position: 'relative', top: '20px'}}
+                        />
+                    </div>
                     <div></div>
                 </div>
                 <div style={{position:'relative', width:'100%', height:'200px'}} />

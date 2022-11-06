@@ -320,6 +320,7 @@ body {
     opacity: 0.75;
     height: 45vh;
     text-align: center;
+    overflow: hidden;
     
     border-radius: 15px;
     background-color: var(--secondary-color);
